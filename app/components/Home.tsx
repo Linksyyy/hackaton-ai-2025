@@ -61,8 +61,12 @@ const systemStatus = [
 ];
 
 // --- Home Component ---
-const Home: React.FC = () => {
-    const [lastMeasurement, setLastMeasurement] = useState<{ data: MeasurementData; ai: AIClassification } | null>(null);
+interface HomeProps {
+    lastMeasurement: { data: MeasurementData; ai: AIClassification } | null;
+    setLastMeasurement: React.Dispatch<React.SetStateAction<{ data: MeasurementData; ai: AIClassification } | null>>;
+}
+
+const Home: React.FC<HomeProps> = ({ lastMeasurement, setLastMeasurement }) => {
     const [history, setHistory] = useState<HistoryEntry[]>([]);
     const [sentJson, setSentJson] = useState<any | null>(null);
     const [simulatedApiResponse, setSimulatedApiResponse] = useState<any | null>(null);

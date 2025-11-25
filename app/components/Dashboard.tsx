@@ -4,17 +4,31 @@ import React, { useState } from 'react';
 import AIAnalyst from './AIAnalyst';
 import Home from './Home';
 
+// --- Interfaces (defined here for common access) ---
+interface MeasurementData {
+    timestamp: string;
+    flow: number;
+    level: number;
+}
+
+interface AIClassification {
+    state: string;
+    code: string;
+    explanation: string;
+}
+
 const Dashboard: React.FC = () => {
     const [activeView, setActiveView] = useState<'Home' | 'AI Analyst'>('Home');
+    const [lastMeasurement, setLastMeasurement] = useState<{ data: MeasurementData; ai: AIClassification } | null>(null);
 
     const renderView = () => {
         switch (activeView) {
             case 'Home':
-                return <Home />;
+                return <Home lastMeasurement={lastMeasurement} setLastMeasurement={setLastMeasurement} />;
             case 'AI Analyst':
-                return <AIAnalyst />;
+                return <AIAnalyst lastMeasurement={lastMeasurement} />;
             default:
-                return <Home />;
+                return <Home lastMeasurement={lastMeasurement} setLastMeasurement={setLastMeasurement} />;
         }
     };
 
